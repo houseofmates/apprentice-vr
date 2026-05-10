@@ -1,10 +1,11 @@
+<<<<<<< HEAD
 apprentice vr is a modern, cross-platform desktop application built with electron, react, and typescript, designed for managing and sideloading content onto Meta Quest devices. It aims to provide a user-friendly and feature-rich alternative to existing sideloading tools.
 
-## inspiration
+<h2 align="center">inspiration</h2>
 
 this project is heavily inspired by the fantastic work done on [rookie sideloader](https://github.com/VRPirates/rookie). apprentice vr seeks to build upon that foundation by offering a contemporary interface and experience across windows, mac, and linux.
 
-## features
+<h2 align="center">features</h2>
 
 *   **cross-platform:** works seamlessly on windows, mac, and linux.
 *   **modern user interface:** Built with Fluent UI and React for a clean and responsive experience.
@@ -28,153 +29,182 @@ this project is heavily inspired by the fantastic work done on [rookie sideloade
     *   Cancel, retry, and delete downloaded files.
 *   **Automatic Dependency Handling:** Manages required tools like ADB and rclone.
 *   **Light & Dark Mode:** Adapts to your system's preferred theme.
+=======
+# apprentice vr
 
-## Screenshots
+apprentice vr is a modern, cross-platform desktop application built with electron, react, and typescript, designed for managing and sideloading content onto quest 2 devices. it aims to provide a user-friendly and feature-rich alternative to existing sideloading tools, featuring a pkm aesthetic with varela round font, lowercase text, and a dark color scheme with yellow/blue accents.
 
-Here are some glimpses of ApprenticeVR in action:
+<h2 align="center">inspiration</h2>
 
-**Device List (Dark Mode)**
-![Device List - Dark Mode](screenshots/01_devices_dark.png)
+this project is heavily inspired by the fantastic work done on [rookie sideloader](https://github.com/vrpirates/rookie). apprentice vr seeks to build upon that foundation by offering a contemporary interface and experience across windows, macos, and linux.
 
-**Game Library (Light Mode)**
-![Game Library - Light Mode](screenshots/02_library_light.png)
+<h2 align="center">features</h2>
 
-**Game Details (Light Mode)**
-![Game Details - Light Mode](screenshots/03_detail_light.png)
+*   **cross-platform:** works seamlessly on windows, macos, and linux.
+*   **modern user interface:** pkm aesthetic with varela round font, lowercase text, and a dark color scheme with yellow/blue accents.
+*   **device management:**
+    *   automatically detect and list connected quest 2 devices.
+    *   connect to and disconnect from devices.
+    *   view device details such as model, id, battery level, and storage information.
+    *   handles unauthorized and offline device states.
+*   **game library management:**
+    *   browse a comprehensive list of available games and applications.
+    *   view game details including thumbnails, descriptions, versions, popularity, size, and last update date.
+    *   search and filter games by name, package id, installation status, or available updates.
+*   **installation & sideloading:**
+    *   download game files and obbs.
+    *   install, uninstall, and update applications on your quest 2 device.
+    *   reinstall existing applications.
+    *   handle updates for installed applications.
+*   **download management:**
+    *   view and manage a queue of ongoing and completed downloads.
+    *   track download progress, extraction progress, and installation status.
+    *   cancel, retry, and delete downloaded files.
+*   **automatic dependency handling:** manages required tools like adb and rclone.
+*   **light & dark mode:** adapts to your system's preferred theme.
+>>>>>>> 99d35b0 (chore: convert ## headers to <h2 align='center'> format in README.md)
 
-**Downloads Manager (Dark Mode)**
-![Downloads Manager - Dark Mode](screenshots/04_download_dark.png)
+<h2 align="center">screenshots</h2>
 
-### macOS Specifics
+here are some glimpses of apprentice vr in action:
 
-**Important:** Since the application is not signed by an Apple Developer ID, when you first try to open `apprenticevr.app` on macOS after building or downloading it, you might encounter an error message stating: `"apprenticeVR is damaged and can't be opened. You should move it to the Trash."`
+**device list (dark mode)**
+![device list - dark mode](screenshots/01_devices_dark.png)
 
-This error occurs because macOS Gatekeeper flags applications downloaded from the internet or built by unidentified developers as potentially unsafe. The `com.apple.quarantine` extended attribute is added to the application bundle by the system.
+**game library (light mode)**
+![game library - light mode](screenshots/02_library_light.png)
 
-To resolve this, you can remove this extended attribute by running the following command in your Terminal:
+**game details (light mode)**
+![game details - light mode](screenshots/03_detail_light.png)
+
+**downloads manager (dark mode)**
+![downloads manager - dark mode](screenshots/04_download_dark.png)
+
+### macos specifics
+
+**important:** since the application is not signed by an apple developer id, when you first try to open `apprenticevr.app` on macos after building or downloading it, you might encounter an error message stating: `"apprenticevr is damaged and can't be opened. you should move it to the trash."`
+
+this error occurs because macos gatekeeper flags applications downloaded from the internet or built by unidentified developers as potentially unsafe. the `com.apple.quarantine` extended attribute is added to the application bundle by the system.
+
+to resolve this, you can remove this extended attribute by running the following command in your terminal:
 
 ```bash
 xattr -c /Applications/apprenticevr.app
 ```
 
-**Note:**
-*   You might need to adjust the path `/Applications/apprenticevr.app` if you have placed the application in a different location.
-*   The `-c` flag in the `xattr` command stands for "clear," and it removes all extended attributes from the specified file or application bundle. By removing the quarantine attribute, you are essentially telling macOS that you trust this application.
+**note:**
+*   you might need to adjust the path `/applications/apprenticevr.app` if you have placed the application in a different location.
+*   the `-c` flag in the `xattr` command stands for "clear," and it removes all extended attributes from the specified file or application bundle. by removing the quarantine attribute, you are essentially telling macos that you trust this application.
 
-After running this command, you should be able to open ApprenticeVR without any issues.
+after running this command, you should be able to open apprentice vr without any issues.
 
-## Logs
+<h2 align="center">logs</h2>
 
-By default, it writes logs to the following locations:
+by default, it writes logs to the following locations:
 
- - **on Linux:** `~/.config/apprenticevr/logs/main.log`
- - **on macOS:** `~/Library/Logs/apprenticevr/main.log`
- - **on Windows:** `%USERPROFILE%\AppData\Roaming\apprenticevr\logs\main.log`
+ - **on linux:** `~/.config/apprenticevr/logs/main.log`
+ - **on macos:** `~/library/logs/apprenticevr/main.log`
+ - **on windows:** `%userprofile%\appdata\roaming\apprenticevr\logs\main.log`
 
-**Note:** When opening an issue, please include the latest log output from the appropriate log file above to help with debugging and troubleshooting.
+**note:** when opening an issue, please include the latest log output from the appropriate log file above to help with debugging and troubleshooting.
 
-You can also upload the current log file in the settings menu and share the url.
+you can also upload the current log file in the settings menu and share the url.
 
-# Troubleshooting Guide
+# troubleshooting guide
 
-If ApprenticeVR is unable to connect, follow the steps below to identify and resolve the issue:
+if apprentice vr is unable to connect, follow the steps below to identify and resolve the issue:
 
 ---
 
-## ✅ Use the Latest Version
+<h2 align="center">✅ use the latest version</h2>
 
-Make sure you're using the latest version of ApprenticeVR:  
+make sure you're using the latest version of apprentice vr:  
 ➡️ [https://github.com/jimzrt/apprenticevr](https://github.com/jimzrt/apprenticevr)
 
 ---
 
-## 🌐 Check Network Access
+<h2 align="center">🌐 check network access</h2>
 
-Ensure you can access the following URLs from your browser:
+ensure you can access the following urls from your browser:
 
 - [https://raw.githubusercontent.com/](https://raw.githubusercontent.com/)  
-  (Should redirect to the GitHub homepage)
+  (should redirect to the github homepage)
 
 - [https://downloads.rclone.org/](https://downloads.rclone.org/)
 
-- [https://vrpirates.wiki/](https://vrpirates.wiki/)
-
 - [https://go.vrpyourself.online/](https://go.vrpyourself.online/)  
-  ⛔ Getting a message like **"Sorry, you have been blocked"** means it's working!
+  ⛔ getting a message like **\"sorry, you have been blocked\"** means it's working!
 
 ---
 
-## 🌍 Change DNS Settings
+<h2 align="center">🌍 change dns settings</h2>
 
-Some ISPs block specific domains. Switch to a public, non-censoring DNS provider:
+some isps block specific domains. switch to a public, non-censoring dns provider:
 
-- [Cloudflare DNS (1.1.1.1)](https://developers.cloudflare.com/1.1.1.1/setup/windows/)
-- [Google Public DNS (8.8.8.8)](https://developers.google.com/speed/public-dns/docs/using)
-- [OpenDNS](https://www.opendns.com/setupguide/)
-
----
-
-## 🔐 Try a VPN
-
-If DNS changes don't help, your ISP might be blocking access. Use a VPN to bypass restrictions:
-
-- [ProtonVPN (free)](https://protonvpn.com/)
-- [1.1.1.1 VPN (free)](https://one.one.one.one/)
-- [Alternate VPN Example](https://gprivate.com/5yxo8)
+- [cloudflare dns (1.1.1.1)](https://developers.cloudflare.com/1.1.1.1/setup/windows/)
+- [google public dns (8.8.8.8)](https://developers.google.com/speed/public-dns/docs/using)
+- [opendns](https://www.opendns.com/setupguide/)
 
 ---
 
-## 🛡️ Router or Firewall Blocking?
+<h2 align="center">🔐 try a vpn</h2>
 
-If a VPN works, but a direct connection doesn't, your router or antivirus/firewall may be blocking access.  
-Check out this guide for help:
+if dns changes don't help, your isp might be blocking access. use a vpn to bypass restrictions:
 
-➡️ [https://rentry.co/ASUSRouterBlock](https://rentry.co/ASUSRouterBlock)
-
-You can either:
-
-- Continue using a VPN  
-- OR identify and whitelist the following domains in your router/firewall settings:
-  - `raw.githubusercontent.com`
-  - `downloads.rclone.org`
-  - `vrpirates.wiki`
-  - `go.vrpyourself.online`
+- [protonvpn (free)](https://protonvpn.com/)
+- [1.1.1.1 vpn (free)](https://one.one.one.one/)
+- [alternate vpn example](https://gprivate.com/5yxo8)
 
 ---
 
-If you're still stuck, feel free to open an issue or ask for help in the community. Happy VR-ing!
+<h2 align="center">🛡️ router or firewall blocking?</h2>
 
+if a vpn works, but a direct connection doesn't, your router or antivirus/firewall may be blocking access.  
+check out this guide for help:
 
-## Recommended IDE Setup
+➡️ [https://rentry.co/asusrouterblock](https://rentry.co/asusrouterblock)
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+you can either:
+  - continue using a vpn
+  - or identify and whitelist the following domains in your router/firewall settings:
+    - `raw.githubusercontent.com`
+    - `downloads.rclone.org`
+    - `go.vrpyourself.online`
 
-## Project Setup
+---
 
-### Prerequisites
+if you're still stuck, feel free to open an issue or ask for help in the community. happy vr-ing!
 
-*   [Node.js](https://nodejs.org/) (which includes npm)
-*   [pnpm](https://pnpm.io/installation) (Recommended package manager)
+<h2 align="center">recommended ide setup</h2>
 
-### Install Dependencies
+- [vscode](https://code.visualstudio.com/) + [eslint](https://marketplace.visualstudio.com/items?itemname=dbaeumer.vscode-eslint) + [prettier](https://marketplace.visualstudio.com/items?itemname=esbenp.prettier-vscode)
+
+<h2 align="center">project setup</h2>
+
+### prerequisites
+
+*   [node.js](https://nodejs.org/) (which includes npm)
+*   [pnpm](https://pnpm.io/installation) (recommended package manager)
+
+### install dependencies
 
 ```bash
 pnpm install
 ```
 
-## Development
+<h2 align="center">development</h2>
 
-To run the application in development mode with hot-reloading:
+to run the application in development mode with hot-reloading:
 
 ```bash
 pnpm dev
 ```
 
-This will start the Electron application and open a development server for the React frontend.
+this will start the electron application and open a development server for the react frontend.
 
-## Building the Application
+<h2 align="center">building the application</h2>
 
-You can build the application for different platforms using the following commands:
+you can build the application for different platforms using the following commands:
 
 ```bash
 # For Windows
@@ -187,25 +217,24 @@ pnpm build:mac
 pnpm build:linux
 ```
 
-Builds will be located in the `dist` or a platform-specific output directory.
+builds will be located in the `dist` or a platform-specific output directory.
 
-## Linting and Formatting
+<h2 align="center">linting and formatting</h2>
 
-To lint the codebase:
+to lint the codebase:
 ```bash
 pnpm lint
 ```
 
-To format the codebase with Prettier:
+to format the codebase with prettier:
 ```bash
 pnpm format
 ```
 
-To perform type checking:
+to perform type checking:
 ```bash
 pnpm typecheck
 ```
 
-
 ---
-![](https://badges.pufler.dev/visits/jimzrt/apprenticeVr)
+![](https://badges.pufler.dev/visits/jimzrt/apprenticevr)

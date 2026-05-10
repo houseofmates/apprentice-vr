@@ -1,42 +1,33 @@
 <<<<<<< HEAD
-apprentice vr is a modern, cross-platform desktop application built with electron, react, and typescript, designed for managing and sideloading content onto Meta Quest devices. It aims to provide a user-friendly and feature-rich alternative to existing sideloading tools.
-
-<h2 align="center">inspiration</h2>
-
-this project is heavily inspired by the fantastic work done on [rookie sideloader](https://github.com/VRPirates/rookie). apprentice vr seeks to build upon that foundation by offering a contemporary interface and experience across windows, mac, and linux.
+apprentice vr is a modern, cross-platform desktop application built with electron, react, and typescript, designed for managing and sideloading content onto meta quest devices. It aims to provide a user-friendly and feature-rich alternative to existing sideloading tools.
 
 <h2 align="center">features</h2>
 
 *   **cross-platform:** works seamlessly on windows, mac, and linux.
 *   **modern user interface:** Built with Fluent UI and React for a clean and responsive experience.
-*   **Device Management:**
-    *   Automatically detect and list connected Meta Quest devices.
-    *   Connect to and disconnect from devices.
-    *   View device details such as model, ID, battery level, and storage information.
-    *   Handles unauthorized and offline device states.
-*   **Game Library Management:**
-    *   Browse a comprehensive list of available games and applications.
-    *   View game details including thumbnails, descriptions, versions, popularity, size, and last update date.
-    *   Search and filter games by name, package ID, installation status, or available updates.
-*   **Installation & Sideloading:**
-    *   Download game files and OBBs.
-    *   Install, uninstall, and update applications on your Quest device.
-    *   Reinstall existing applications.
-    *   Handle updates for installed applications.
-*   **Download Management:**
-    *   View and manage a queue of ongoing and completed downloads.
-    *   Track download progress, extraction progress, and installation status.
-    *   Cancel, retry, and delete downloaded files.
-*   **Automatic Dependency Handling:** Manages required tools like ADB and rclone.
-*   **Light & Dark Mode:** Adapts to your system's preferred theme.
+*   **device management:**
+    *   automatically detect and list connected Meta Quest devices.
+    *   connect to and disconnect from devices.
+    *   view device details such as model, ID, battery level, and storage information.
+    *   handles unauthorized and offline device states.
+*   **game library management:**
+    *   browse a comprehensive list of available games and applications.
+    *   vew game details including thumbnails, descriptions, versions, popularity, size, and last update date.
+    *   search and filter games by name, package ID, installation status, or available updates.
+*   **installation & sideloading:**
+    *   download game files and OBBs.
+    *   install, uninstall, and update applications on your Quest device.
+    *   reinstall existing applications.
+    *   handle updates for installed applications.
+*   **download management:**
+    *   view and manage a queue of ongoing and completed downloads.
+    *   track download progress, extraction progress, and installation status.
+    *   cancel, retry, and delete downloaded files.
+*   **automatic Dependency Handling:** Manages required tools like ADB and rclone.
 =======
-# apprentice vr
+<h2 align="center">apprentice vr</h2>
 
-apprentice vr is a modern, cross-platform desktop application built with electron, react, and typescript, designed for managing and sideloading content onto quest 2 devices. it aims to provide a user-friendly and feature-rich alternative to existing sideloading tools, featuring a pkm aesthetic with varela round font, lowercase text, and a dark color scheme with yellow/blue accents.
-
-<h2 align="center">inspiration</h2>
-
-this project is heavily inspired by the fantastic work done on [rookie sideloader](https://github.com/vrpirates/rookie). apprentice vr seeks to build upon that foundation by offering a contemporary interface and experience across windows, macos, and linux.
+apprentice vr is a modern, cross-platform desktop application built with electron, react, and typescript, designed for managing and sideloading content onto quest 2 devices. it aims to provide a user-friendly and feature-rich alternative to existing sideloading tools, featuring a pkm aesthetic with varela round font, lowercase text, and a dark color scheme with yellow/blue accents. this is a fork of the original [project](https://github.com/jimzrt/apprenticeVr)
 
 <h2 align="center">features</h2>
 
@@ -80,24 +71,6 @@ here are some glimpses of apprentice vr in action:
 **downloads manager (dark mode)**
 ![downloads manager - dark mode](screenshots/04_download_dark.png)
 
-### macos specifics
-
-**important:** since the application is not signed by an apple developer id, when you first try to open `apprenticevr.app` on macos after building or downloading it, you might encounter an error message stating: `"apprenticevr is damaged and can't be opened. you should move it to the trash."`
-
-this error occurs because macos gatekeeper flags applications downloaded from the internet or built by unidentified developers as potentially unsafe. the `com.apple.quarantine` extended attribute is added to the application bundle by the system.
-
-to resolve this, you can remove this extended attribute by running the following command in your terminal:
-
-```bash
-xattr -c /Applications/apprenticevr.app
-```
-
-**note:**
-*   you might need to adjust the path `/applications/apprenticevr.app` if you have placed the application in a different location.
-*   the `-c` flag in the `xattr` command stands for "clear," and it removes all extended attributes from the specified file or application bundle. by removing the quarantine attribute, you are essentially telling macos that you trust this application.
-
-after running this command, you should be able to open apprentice vr without any issues.
-
 <h2 align="center">logs</h2>
 
 by default, it writes logs to the following locations:
@@ -116,13 +89,6 @@ if apprentice vr is unable to connect, follow the steps below to identify and re
 
 ---
 
-<h2 align="center">✅ use the latest version</h2>
-
-make sure you're using the latest version of apprentice vr:  
-➡️ [https://github.com/jimzrt/apprenticevr](https://github.com/jimzrt/apprenticevr)
-
----
-
 <h2 align="center">🌐 check network access</h2>
 
 ensure you can access the following urls from your browser:
@@ -137,7 +103,7 @@ ensure you can access the following urls from your browser:
 
 ---
 
-<h2 align="center">🌍 change dns settings</h2>
+<h2 align="center">change dns settings</h2>
 
 some isps block specific domains. switch to a public, non-censoring dns provider:
 
@@ -147,7 +113,7 @@ some isps block specific domains. switch to a public, non-censoring dns provider
 
 ---
 
-<h2 align="center">🔐 try a vpn</h2>
+<h2 align="center">try a vpn</h2>
 
 if dns changes don't help, your isp might be blocking access. use a vpn to bypass restrictions:
 
@@ -157,7 +123,7 @@ if dns changes don't help, your isp might be blocking access. use a vpn to bypas
 
 ---
 
-<h2 align="center">🛡️ router or firewall blocking?</h2>
+<h2 align="center">router or firewall blocking?</h2>
 
 if a vpn works, but a direct connection doesn't, your router or antivirus/firewall may be blocking access.  
 check out this guide for help:
@@ -235,6 +201,3 @@ to perform type checking:
 ```bash
 pnpm typecheck
 ```
-
----
-![](https://badges.pufler.dev/visits/jimzrt/apprenticevr)

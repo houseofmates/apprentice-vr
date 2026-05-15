@@ -34,12 +34,7 @@ export const GamesProvider: React.FC<GamesProviderProps> = ({ children }) => {
   const [missingGames] = useState<GameInfo[]>([])
   const [outdatedGames] = useState<GameInfo[]>([])
 
-  const {
-    packages: installedPackages,
-    isConnected: isDeviceConnected,
-    selectedDevice,
-    selectedDeviceDetails
-  } = useAdb()
+  const { packages: installedPackages, isConnected: isDeviceConnected, selectedDevice } = useAdb()
   const { isReady } = useDependency()
 
   const addGameToBlacklist = useCallback(
@@ -65,10 +60,6 @@ export const GamesProvider: React.FC<GamesProviderProps> = ({ children }) => {
   const checkForUploadCandidates = useCallback(() => {
     if (!isDeviceConnected || installedPackages.length === 0 || rawGames.length === 0) {
       return
-    }
-
-    if (!selectedDeviceDetails?.isQuestDevice) {
-      //return
     }
 
     const candidates: UploadCandidate[] = []
@@ -140,7 +131,7 @@ export const GamesProvider: React.FC<GamesProviderProps> = ({ children }) => {
     }
 
     processInstalledPackages()
-  }, [isDeviceConnected, installedPackages, rawGames, selectedDeviceDetails, selectedDevice])
+  }, [isDeviceConnected, installedPackages, rawGames, selectedDevice])
 
   // Check for upload candidates whenever device versions or game data changes
   useEffect(() => {
@@ -156,21 +147,15 @@ export const GamesProvider: React.FC<GamesProviderProps> = ({ children }) => {
 
   // enrich the games with the installed packages and the device version codes
   const games = useMemo((): GameInfo[] => {
-    const installedSet = new Set(installedPackages.map((pkg) => pkg.packageName))
+    const installedMap = new Map(installedPackages.map((pkg) => [pkg.packageName, pkg.versionCode]))
 
     return rawGames.map((game) => {
-      const isInstalled = game.packageName ? installedSet.has(game.packageName) : false
+      const isInstalled = game.packageName ? installedMap.has(game.packageName) : false
       let deviceVersionCode: number | undefined = undefined
       let hasUpdate = false
 
-      if (
-        isInstalled &&
-        game.packageName &&
-        installedPackages.find((pkg) => pkg.packageName === game.packageName)
-      ) {
-        deviceVersionCode = installedPackages.find(
-          (pkg) => pkg.packageName === game.packageName
-        )?.versionCode
+      if (isInstalled && game.packageName) {
+        deviceVersionCode = installedMap.get(game.packageName)
         const listVersionNumeric = parseVersion(game.version)
 
         if (listVersionNumeric !== null && deviceVersionCode !== undefined) {

@@ -25,7 +25,6 @@ export const AdbProvider: React.FC<AdbProviderProps> = ({ children }) => {
   const [userName, setUserNameState] = useState<string>('')
   const [loadingUserName, setLoadingUserName] = useState<boolean>(false)
   const { isReady } = useDependency()
-
   const selectedDeviceDetails = devices.find((device) => device.id === selectedDevice) ?? null
 
   // Helper function to merge a device with bookmarks
@@ -62,7 +61,6 @@ export const AdbProvider: React.FC<AdbProviderProps> = ({ children }) => {
   // Initialize device tracking when provider mounts
   useEffect(() => {
     if (!isReady) return
-
     window.api.adb.startTrackingDevices()
 
     // Device listeners with bookmark merging

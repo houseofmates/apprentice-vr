@@ -636,8 +636,11 @@ class GameService extends EventEmitter implements GamesAPI {
     const notePath = join(this.metaPath, 'notes', `${releaseName}.txt`)
     try {
       return await fs.readFile(notePath, 'utf-8')
-    } catch {
-      return ''
+    } catch (error: unknown) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+        return ''
+      }
+      throw error
     }
   }
 

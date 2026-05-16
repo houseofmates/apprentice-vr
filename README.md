@@ -1,4 +1,4 @@
-<h1 align="center">apprentice vr is a modern, cross-platform desktop application built with electron, react, and typescript, designed for managing and sideloading content onto meta quest devices. It aims to provide a user-friendly and feature-rich alternative to existing sideloading tools.</h1>
+<h1 align="center">a modern, cross-platform desktop application built with electron, react, and typescript, designed for managing and sideloading content onto meta quest devices</h1>
 
 <h2 align="center">features</h2>
 

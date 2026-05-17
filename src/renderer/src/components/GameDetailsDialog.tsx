@@ -30,11 +30,14 @@ import {
   InfoRegular,
   CheckmarkCircleRegular,
   VideoRegular,
-  BroomRegular as UninstallIcon
+  BroomRegular as UninstallIcon,
+  StarRegular,
+  StarFilled
 } from '@fluentui/react-icons'
 import placeholderImage from '../assets/images/game-placeholder.png'
 import YouTube from 'react-youtube'
 import { useGames } from '@renderer/hooks/useGames'
+import { useCollections } from '@renderer/hooks/useCollections'
 
 const useStyles = makeStyles({
   dialogContentLayout: {
@@ -150,6 +153,21 @@ const useStyles = makeStyles({
     ':hover': {
       backgroundColor: '#dc2626'
     }
+  },
+  favoriteButton: {
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    padding: '4px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: tokens.spacingHorizontalS
+  },
+  titleRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: tokens.spacingHorizontalXS
   }
 })
 
@@ -190,10 +208,19 @@ const GameDetailsDialog: React.FC<GameDetailsDialogProps> = ({
 }) => {
   const styles = useStyles()
   const { getTrailerVideoId: getTrailerVideoIdFromContext } = useGames()
+  const { toggleFavorite, isFavorite } = useCollections()
   const [currentGameNote, setCurrentGameNote] = useState<string | null>(null)
   const [loadingNote, setLoadingNote] = useState<boolean>(false)
   const [videoId, setVideoId] = useState<string | null>(null)
   const [loadingVideo, setLoadingVideo] = useState<boolean>(false)
+
+  const isGameFavorite = game ? isFavorite(game.packageName) : false
+
+  const handleToggleFavorite = (): void => {
+    if (game) {
+      toggleFavorite(game.packageName)
+    }
+  }
 
   // Fetch note when dialog opens or game changes
   useEffect(() => {
@@ -417,7 +444,21 @@ const GameDetailsDialog: React.FC<GameDetailsDialogProps> = ({
         <DialogSurface mountNode={document.getElementById('portal')}>
           <DialogBody>
             <div className={styles.dialogHeader}>
-              <DialogTitle>{game?.name}</DialogTitle>
+              <div className={styles.titleRow}>
+                <button
+                  onClick={handleToggleFavorite}
+                  className={styles.favoriteButton}
+                  title={isGameFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                  aria-label={isGameFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                >
+                  {isGameFavorite ? (
+                    <StarFilled fontSize={22} color="#f6b012" />
+                  ) : (
+                    <StarRegular fontSize={22} color="#666666" />
+                  )}
+                </button>
+                <DialogTitle>{game?.name}</DialogTitle>
+              </div>
               <Button
                 appearance="subtle"
                 icon={<DismissRegular />}

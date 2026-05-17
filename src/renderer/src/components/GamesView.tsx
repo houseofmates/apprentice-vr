@@ -54,15 +54,19 @@ import {
   FolderAddRegular,
   DocumentRegular,
   ChevronDownRegular,
-  CopyRegular
+  CopyRegular,
+  StarRegular,
+  StarFilled
 } from '@fluentui/react-icons'
 import { ArrowLeftRegular } from '@fluentui/react-icons'
 import GameDetailsDialog from './GameDetailsDialog'
 import { useGameDialog } from '@renderer/hooks/useGameDialog'
+import { useCollections } from '@renderer/hooks/useCollections'
 import MirrorSelector from './MirrorSelector'
 
 // Column width constants
 const COLUMN_WIDTHS = {
+  FAVORITE: 40,
   STATUS: 60,
   THUMBNAIL: 90,
   VERSION: 180,
@@ -74,6 +78,7 @@ const COLUMN_WIDTHS = {
 
 // Calculate fixed columns total width
 const FIXED_COLUMNS_WIDTH =
+  COLUMN_WIDTHS.FAVORITE +
   COLUMN_WIDTHS.STATUS +
   COLUMN_WIDTHS.THUMBNAIL +
   COLUMN_WIDTHS.VERSION +
@@ -81,7 +86,7 @@ const FIXED_COLUMNS_WIDTH =
   COLUMN_WIDTHS.SIZE +
   COLUMN_WIDTHS.LAST_UPDATED
 
-type FilterType = 'all' | 'installed' | 'update'
+type FilterType = 'all' | 'installed' | 'update' | 'favorites'
 
 const filterGameNameAndPackage: FilterFn<GameInfo> = (row, _columnId, filterValue) => {
   const searchStr = String(filterValue).toLowerCase()
@@ -261,6 +266,8 @@ const GamesView: React.FC<GamesViewProps> = ({ onBackToDevices }) => {
     deleteFiles
   } = useDownload()
 
+  const { toggleFavorite, isFavorite } = useCollections()
+
   const styles = useStyles()
 
   const [globalFilter, setGlobalFilter] = useState('')
@@ -286,12 +293,15 @@ const GamesView: React.FC<GamesViewProps> = ({ onBackToDevices }) => {
     const total = games.length
     const installed = games.filter((g) => g.isInstalled).length
     const updates = games.filter((g) => g.hasUpdate).length
-    return { total, installed, updates }
-  }, [games])
+    const favs = games.filter((g) => isFavorite(g.packageName)).length
+    return { total, installed, updates, favs }
+  }, [games, isFavorite])
 
   useEffect(() => {
     setColumnFilters((prev) => {
-      const otherFilters = prev.filter((f) => f.id !== 'isInstalled' && f.id !== 'hasUpdate')
+      const otherFilters = prev.filter(
+        (f) => f.id !== 'isInstalled' && f.id !== 'hasUpdate' && f.id !== 'isFavorite'
+      )
       switch (activeFilter) {
         case 'installed':
           return [...otherFilters, { id: 'isInstalled', value: true }]
@@ -301,6 +311,8 @@ const GamesView: React.FC<GamesViewProps> = ({ onBackToDevices }) => {
             { id: 'isInstalled', value: true },
             { id: 'hasUpdate', value: true }
           ]
+        case 'favorites':
+          return [...otherFilters, { id: 'isFavorite', value: true }]
         case 'all':
         default:
           return otherFilters
@@ -382,6 +394,47 @@ const GamesView: React.FC<GamesViewProps> = ({ onBackToDevices }) => {
     )
 
     return [
+      {
+        id: 'favorite',
+        header: '',
+        size: COLUMN_WIDTHS.FAVORITE,
+        enableResizing: false,
+        enableSorting: false,
+        cell: ({ row }) => {
+          const game = row.original
+          const isFav = isFavorite(game.packageName)
+
+          const handleFavoriteClick = (e: React.MouseEvent): void => {
+            e.stopPropagation() // Prevent row click
+            toggleFavorite(game.packageName)
+          }
+
+          return (
+            <div className={styles.statusIconCell}>
+              <button
+                onClick={handleFavoriteClick}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                title={isFav ? 'Remove from favorites' : 'Add to favorites'}
+                aria-label={isFav ? 'Remove from favorites' : 'Add to favorites'}
+              >
+                {isFav ? (
+                  <StarFilled fontSize={18} color="#f6b012" />
+                ) : (
+                  <StarRegular fontSize={18} color="#666666" />
+                )}
+              </button>
+            </div>
+          )
+        }
+      },
       {
         id: 'downloadStatus',
         header: '',
@@ -568,9 +621,19 @@ const GamesView: React.FC<GamesViewProps> = ({ onBackToDevices }) => {
         accessorKey: 'hasUpdate',
         header: 'Update Status',
         enableResizing: false
+      },
+      {
+        id: 'isFavorite',
+        header: 'Favorite Status',
+        enableResizing: false,
+        accessorFn: (row) => isFavorite(row.packageName),
+        filterFn: (row, _columnId, filterValue) => {
+          if (!filterValue) return true
+          return isFavorite(row.original.packageName)
+        }
       }
     ]
-  }, [downloadStatusMap, styles, tableWidth])
+  }, [downloadStatusMap, styles, tableWidth, isFavorite, toggleFavorite])
 
   const table = useReactTable({
     data: games,
@@ -583,7 +646,7 @@ const GamesView: React.FC<GamesViewProps> = ({ onBackToDevices }) => {
       sorting,
       globalFilter,
       columnFilters,
-      columnVisibility: { isInstalled: false, hasUpdate: false },
+      columnVisibility: { isInstalled: false, hasUpdate: false, isFavorite: false },
       columnSizing
     },
     onSortingChange: setSorting,
@@ -1214,29 +1277,38 @@ const GamesView: React.FC<GamesViewProps> = ({ onBackToDevices }) => {
               </MenuPopover>
             </Menu>
             <span className="last-synced">Last synced: {formatDate(lastSyncTime)}</span>
-            {isConnected && (
-              <div className="filter-buttons">
-                <button
-                  onClick={() => setActiveFilter('all')}
-                  className={activeFilter === 'all' ? 'active' : ''}
-                >
-                  All ({counts.total})
-                </button>
-                <button
-                  onClick={() => setActiveFilter('installed')}
-                  className={activeFilter === 'installed' ? 'active' : ''}
-                >
-                  Installed ({counts.installed})
-                </button>
-                <button
-                  onClick={() => setActiveFilter('update')}
-                  className={activeFilter === 'update' ? 'active' : ''}
-                  disabled={counts.updates === 0}
-                >
-                  Updates ({counts.updates})
-                </button>
-              </div>
-            )}
+            <div className="filter-buttons">
+              <button
+                onClick={() => setActiveFilter('all')}
+                className={activeFilter === 'all' ? 'active' : ''}
+              >
+                All ({counts.total})
+              </button>
+              <button
+                onClick={() => setActiveFilter('favorites')}
+                className={activeFilter === 'favorites' ? 'active' : ''}
+                disabled={counts.favs === 0}
+              >
+                ★ Favorites ({counts.favs})
+              </button>
+              {isConnected && (
+                <>
+                  <button
+                    onClick={() => setActiveFilter('installed')}
+                    className={activeFilter === 'installed' ? 'active' : ''}
+                  >
+                    Installed ({counts.installed})
+                  </button>
+                  <button
+                    onClick={() => setActiveFilter('update')}
+                    className={activeFilter === 'update' ? 'active' : ''}
+                    disabled={counts.updates === 0}
+                  >
+                    Updates ({counts.updates})
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
         <div className="games-toolbar-right">

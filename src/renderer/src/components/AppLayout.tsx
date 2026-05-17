@@ -40,6 +40,7 @@ import {
 import { UploadProvider } from '@renderer/context/UploadProvider'
 import { useUpload } from '@renderer/hooks/useUpload'
 import { GameDialogProvider } from '@renderer/context/GameDialogProvider'
+import { CollectionsProvider } from '@renderer/context/CollectionsProvider'
 import pkmTheme from '../theme/pkmTheme'
 
 enum AppView {
@@ -619,7 +620,9 @@ const AppLayoutWithProviders: React.FC = () => {
       <DependencyProvider>
         <DownloadProvider>
           <UploadProvider>
-            <AppLayout />
+            <CollectionsProvider>
+              <AppLayout />
+            </CollectionsProvider>
           </UploadProvider>
         </DownloadProvider>
       </DependencyProvider>

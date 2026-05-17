@@ -143,6 +143,13 @@ const useStyles = makeStyles({
   progressSection: {
     marginTop: tokens.spacingVerticalM,
     marginBottom: tokens.spacingVerticalM
+  },
+  dangerButton: {
+    backgroundColor: '#ef4444',
+    color: '#ffffff',
+    ':hover': {
+      backgroundColor: '#dc2626'
+    }
   }
 })
 
@@ -276,7 +283,8 @@ const GameDetailsDialog: React.FC<GameDetailsDialogProps> = ({
     if (canCancel) {
       return (
         <Button
-          appearance="danger"
+          appearance="secondary"
+          className={styles.dangerButton}
           icon={<DismissRegular />}
           onClick={() => onCancelDownload(currentGame)}
           disabled={isBusy}
@@ -298,7 +306,8 @@ const GameDetailsDialog: React.FC<GameDetailsDialogProps> = ({
             Retry
           </Button>
           <Button
-            appearance="danger"
+            appearance="secondary"
+            className={styles.dangerButton}
             icon={<DeleteRegular />}
             onClick={() => onDeleteDownloaded(currentGame)}
             disabled={isBusy}
@@ -322,7 +331,8 @@ const GameDetailsDialog: React.FC<GameDetailsDialogProps> = ({
               Update
             </Button>
             <Button
-              appearance="danger"
+              appearance="secondary"
+              className={styles.dangerButton}
               icon={<UninstallIcon />}
               onClick={() => onUninstall(currentGame)}
               disabled={!isConnected || isBusy}
@@ -343,7 +353,8 @@ const GameDetailsDialog: React.FC<GameDetailsDialogProps> = ({
               Reinstall
             </Button>
             <Button
-              appearance="danger"
+              appearance="secondary"
+              className={styles.dangerButton}
               icon={<UninstallIcon />}
               onClick={() => onUninstall(currentGame)}
               disabled={!isConnected || isBusy}
@@ -367,7 +378,8 @@ const GameDetailsDialog: React.FC<GameDetailsDialogProps> = ({
             Install
           </Button>
           <Button
-            appearance="danger"
+            appearance="secondary"
+            className={styles.dangerButton}
             icon={<DeleteRegular />}
             onClick={() => onDeleteDownloaded(currentGame)}
             disabled={isBusy}

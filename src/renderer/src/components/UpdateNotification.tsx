@@ -225,14 +225,14 @@ export function UpdateNotification(): React.ReactElement | null {
       <div className={styles.updateContent}>
         <div className={styles.contentWithIcon}>
           <div className={styles.releaseInfo}>
-            <Text size="large">
+            <Text size={400}>
               A new version{' '}
               <span className={styles.highlightVersion}>{updateAvailable.version}</span> is
               available.
             </Text>
 
             {updateAvailable.releaseDate && (
-              <Text size="small">
+              <Text size={200}>
                 Released: {new Date(updateAvailable.releaseDate).toLocaleDateString()}
               </Text>
             )}
@@ -298,7 +298,7 @@ export function UpdateNotification(): React.ReactElement | null {
             )}
 
             <div style={{ marginTop: '12px', paddingTop: '8px', borderTop: '1px solid #e0e0e0' }}>
-              <Text size="small" style={{ color: '#666' }}>
+              <Text size={200} style={{ color: '#666' }}>
                 Visit the{' '}
                 <Button
                   appearance="transparent"

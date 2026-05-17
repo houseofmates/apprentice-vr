@@ -16,6 +16,7 @@ import {
   DialogActions,
   MessageBar,
   MessageBarBody,
+  MessageBarActions,
   Spinner,
   tokens,
   makeStyles,
@@ -26,6 +27,7 @@ import {
   DeleteRegular,
   CheckmarkCircleRegular,
   DismissCircleRegular,
+  DismissRegular,
   ClockRegular,
   PlayRegular,
   RadioButtonRegular,
@@ -266,8 +268,18 @@ pass = password`}
       </div>
 
       {error && (
-        <MessageBar intent="error" onDismiss={clearError}>
+        <MessageBar intent="error">
           <MessageBarBody>{error}</MessageBarBody>
+          <MessageBarActions
+            containerAction={
+              <Button
+                appearance="transparent"
+                icon={<DismissRegular />}
+                onClick={clearError}
+                aria-label="dismiss"
+              />
+            }
+          />
         </MessageBar>
       )}
 
